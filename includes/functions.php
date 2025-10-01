@@ -6,6 +6,8 @@ function esc_html($text)
 
 function read_csv_rows($path)
 {
+    try{
+    
     if (is_file($path === false)){
      return [];
     }
@@ -13,6 +15,18 @@ function read_csv_rows($path)
 
     while(!feof($fp))
     {
-        
+        while (($row = fgetcsv($fp)) !== false)
+        {
+            $csvArray[] = $row;
+        }
     }
+    return $csvArray;
+    }
+    catch(Exception $e){
+        echo "Error: " . $e;
+        return [];
+    }
+
+    fclose($fp);
 }
+
